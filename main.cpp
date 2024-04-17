@@ -1,19 +1,49 @@
 #include <iostream>
+#include <fstream>
+#include <ostream>
 #include "matrix.h"
+
+ 
 
 int main()
 {
-    
-    Matrix a(2, 2);
-    a.get_matrix();
+    // Matrix n;
+    // std::cin >> n;
+    // n.print_matrix();
 
-    Matrix b(2, 2);
-    b.get_matrix();
+    Matrix m;
+
+    std::ifstream in("in.txt");
+    if (in.is_open())
+    {
+        in >> m;
+        in.close();
+    }
+
+    // m.print_matrix();
+    // std::cout << m;
+
+    // if (m == 3) std::cout << "lol yes";
+    // else std::cout << "noooo";
+    // std::cout << (m == 3);
+    std::ofstream f("out.txt");
+    if (f.is_open())
+    {
+        f << m;
+        f.close();
+    }
+
+
+    // Matrix a(2, 2);
+    // a.get_matrix();
+
+    // Matrix b(2, 2);
+    // b.get_matrix();
 
     // Matrix c(2, 3);
     // c.get_matrix();
 
-    (a+b).print_matrix();
+    // (a+b).print_matrix();
     // (a+c).print_matrix();
 
     // (a-b).print_matrix();

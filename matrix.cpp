@@ -1,15 +1,19 @@
 #include "matrix.h"
 #include <iostream>
+#include <fstream>
+#include <ostream>
 
 void Matrix :: get_matrix() //считать
-{
-    double  element;
+{   
+    if (m==0 && n ==0){
+        std::cin >> m;
+        std::cin >> n;
+    }
     for (int i = 0; i < m; ++ i)
     {
         for (int j = 0; j < n; ++ j)
         {
-            std::cin >> element;
-            data_arr[i][j] = element;
+            std::cin >> data_arr[i][j];
         }
     }
 }
@@ -25,6 +29,36 @@ void Matrix :: print_matrix() // вывести
 }  
 
 // операторы ------------------------------------------------------------------
+
+std::istream& operator>>(std::istream& in, Matrix& matrix) //считать 
+{   
+    if (matrix.m==0 && matrix.n ==0){
+        in >> matrix.m;
+        in >> matrix.n;
+    }
+    for (int i = 0; i < matrix.m; ++i)
+    {
+        for (int j = 0; j < matrix.n; ++j)
+        {
+            in >> matrix.data_arr[i][j];
+        }
+    }
+    return in;
+}
+
+std::ostream& operator<<(std::ostream& out, const Matrix& matrix) //вывести
+{   
+    for (int i = 0; i < matrix.m; ++i)
+    {
+        for (int j = 0; j < matrix.n; ++j)
+        {
+            out << matrix.data_arr[i][j] << " ";
+        }
+        out << std::endl;
+    }
+    return out;
+}
+
 Matrix operator+(const Matrix a, const Matrix b) //сложение
 {
     if (a.m == b.m && a.n == b.n)
@@ -114,6 +148,27 @@ bool operator==(const Matrix a, const Matrix b) // равенство
     else return false;
 }
 
+bool operator==(const Matrix a, int numb) // равенство со скаляром
+{
+    for (int i = 0; i < a.m; ++ i)
+    {
+        for (int j = 0; j < a.n; ++ j) 
+        {   
+            if (i == j)
+            {
+                if (a.data_arr[i][j] ==  numb) continue;
+                else return false;
+            }
+            else
+            {
+                if (a.data_arr[i][j] ==  0) continue;
+                else return false;
+            }
+        }
+    }
+    return true;
+}
+
 bool operator!=(const Matrix a, const Matrix b) // неравенство
 {
 if (a.m == b.m && a.n == b.n)
@@ -129,6 +184,12 @@ if (a.m == b.m && a.n == b.n)
     return false;
 }
 else return true;
+}
+
+bool operator!=(const Matrix a, int numb) // неравенство со скаляром
+{
+    if (a == numb) return false;
+    else return true;
 }
 
 // элементаные преобразования --------------------------------------------------
@@ -225,7 +286,7 @@ Matrix Matrix :: alg_compl() // матрица алгебраических до
     }
     return ansver;
 }   
-        
+
 Matrix Matrix :: T() // транспонирование
 {
     Matrix x(n, m);
@@ -237,22 +298,26 @@ Matrix Matrix :: T() // транспонирование
         }
     } 
     return x;
-}
+}       
 
-Matrix Matrix :: reversive()
+Matrix Matrix::reversive()
 {
     Matrix x(m, n);
-    if (determinant() != 0 && determinant() !=100001)
+    try
     {
+        if (determinant() == 0)
+        {
+            throw std::runtime_error("sorry, it has no reversive one");
+        }
         x = ((alg_compl()).T())*(double(1)/determinant());
     }
-    else
+    catch (const std::runtime_error& e)
     {
-        std::cerr << "sorry, it has no reversive one";
+        std::cerr << e.what() << std::endl;
         x = Matrix(0, 0);
     }
     return x;
-}   
+}
 
 
  
