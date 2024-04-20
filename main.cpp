@@ -11,28 +11,35 @@ int main()
     // std::cin >> n;
     // n.print_matrix();
 
-    Matrix m;
+    // Matrix m(3,3);
+    // Matrix m;
 
-    std::ifstream in("in.txt");
-    if (in.is_open())
-    {
-        in >> m;
-        in.close();
-    }
+    // std::ifstream in("in.txt");
+    // if (in.is_open())
+    // {
+    //     in >> m;
+    //     in.close();
+    // }
 
+    
     // m.print_matrix();
     // std::cout << m;
 
     // if (m == 3) std::cout << "lol yes";
     // else std::cout << "noooo";
     // std::cout << (m == 3);
-    std::ofstream f("out.txt");
-    if (f.is_open())
-    {
-        f << m;
-        f.close();
-    }
+    // std::ofstream f("out.txt");
+    // if (f.is_open())
+    // {
+    //     f << m;
+    //     f.close();
+    // }
 
+    Matrix z = Matrix::zero(1, 5);
+    std::cout << z;
+
+    Matrix u = Matrix::unit(4);
+    std::cout << u;
 
     // Matrix a(2, 2);
     // a.get_matrix();

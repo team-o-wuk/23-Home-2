@@ -45,6 +45,29 @@ class Matrix
             data_arr = nullptr;
         }
 
+        static Matrix zero(int lins, int tabs) // стат метод для нулевой матрицы
+        {
+        Matrix x(lins, tabs);
+        for (int i = 0; i < lins; ++i)
+        {
+            for (int j = 0; j < tabs; ++j)
+            {
+                x.data_arr[i][j] = 0;
+            }
+        }
+        return x;
+        }
+
+        static Matrix unit(int s) // стат метод для единичной матицы
+        {
+        Matrix x(s, s);
+        for (int i = 0; i < s; ++i)
+            {
+                x.data_arr[i][i] = 1;
+            }
+        return x;
+        }        
+
     void get_matrix();
     void print_matrix();
 
@@ -55,7 +78,7 @@ class Matrix
     friend Matrix operator*(const Matrix a, const Matrix b);
     friend Matrix operator*(const Matrix a, double numb);
     friend bool operator==(const Matrix a, const Matrix b);
-    friend bool operator==(const Matrix a,  int umb);
+    friend bool operator==(const Matrix a,  int numb);
     friend bool operator!=(const Matrix a, const Matrix b);
     friend bool operator!=(const Matrix a, int numb);
 

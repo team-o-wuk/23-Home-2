@@ -30,12 +30,8 @@ void Matrix :: print_matrix() // вывести
 
 // операторы ------------------------------------------------------------------
 
-std::istream& operator>>(std::istream& in, Matrix& matrix) //считать 
+std::istream& operator>>(std::istream& in, Matrix& matrix) //считать !!! для матрицы с заданным размером !!!
 {   
-    if (matrix.m==0 && matrix.n ==0){
-        in >> matrix.m;
-        in >> matrix.n;
-    }
     for (int i = 0; i < matrix.m; ++i)
     {
         for (int j = 0; j < matrix.n; ++j)
@@ -45,6 +41,22 @@ std::istream& operator>>(std::istream& in, Matrix& matrix) //считать
     }
     return in;
 }
+
+// std::ifstream& operator>>(std::ifstream& in, Matrix& matrix) //считать 
+// {   
+//     if (matrix.m == 0 && matrix.n == 0){
+//         in >> matrix.m;
+//         in >> matrix.n;
+//     }
+//     for (int i = 0; i < matrix.m; ++i)
+//     {
+//         for (int j = 0; j < matrix.n; ++j)
+//         {
+//             in >> matrix.data_arr[i][j];
+//         }
+//     }
+//     return in;
+// }
 
 std::ostream& operator<<(std::ostream& out, const Matrix& matrix) //вывести
 {   
