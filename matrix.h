@@ -77,6 +77,7 @@ class Matrix
     friend Matrix operator-(const Matrix a, const Matrix b);
     friend Matrix operator*(const Matrix a, const Matrix b);
     friend Matrix operator*(const Matrix a, double numb);
+    
     friend bool operator==(const Matrix a, const Matrix b);
     friend bool operator==(const Matrix a,  int numb);
     friend bool operator!=(const Matrix a, const Matrix b);
@@ -85,12 +86,12 @@ class Matrix
     void change_ft(int str_1, int str_2);
     void change_st(int str_1, double  multiplier );
     void change_tt(int str_1, int str_2, double  multiplier);
-    double  determinant();
+    double determinant();
 
     Matrix alg_compl();
     Matrix T();
     Matrix reversive();
-
+    friend Matrix operator!(Matrix a);
 };
 #endif
 

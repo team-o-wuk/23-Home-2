@@ -331,5 +331,23 @@ Matrix Matrix::reversive()
     return x;
 }
 
-
+Matrix operator!(Matrix a)
+{
+    Matrix x(a.m, a.n);
+    try
+    {
+         
+        if (a.determinant() == 0)
+        {
+            throw std::runtime_error("sorry, it has no reversive one");
+        }
+        x = ((a.alg_compl()).T())*(double(1)/a.determinant());
+    }
+    catch (const std::runtime_error& e)
+    {
+        std::cerr << e.what() << std::endl;
+        x = Matrix(0, 0);
+    }
+    return x;
+}
  
