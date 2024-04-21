@@ -3,7 +3,8 @@
 #include <fstream>
 #include <ostream>
 
-void Matrix :: get_matrix() //считать
+template <typename T>
+void Matrix<T> :: get_matrix() //считать
 {   
     if (m==0 && n ==0){
         std::cin >> m;
@@ -18,7 +19,8 @@ void Matrix :: get_matrix() //считать
     }
 }
 
-void Matrix :: print_matrix() // вывести
+template <typename T>
+void Matrix<T> :: print_matrix() // вывести
 {
     for (int i = 0; i < m; i++)
     {
@@ -30,7 +32,9 @@ void Matrix :: print_matrix() // вывести
 
 // операторы ------------------------------------------------------------------
 
-std::istream& operator>>(std::istream& in, Matrix& matrix) //считать !!! для матрицы с заданным размером !!!
+template <typename T>
+std::istream& operator>>(std::istream& in, const
+Matrix<T>& matrix) //считать !!! для матрицы с заданным размером !!!
 {   
     for (int i = 0; i < matrix.m; ++i)
     {
@@ -58,7 +62,8 @@ std::istream& operator>>(std::istream& in, Matrix& matrix) //считать !!! 
 //     return in;
 // }
 
-std::ostream& operator<<(std::ostream& out, const Matrix& matrix) //вывести
+template <typename T>
+std::ostream& operator<< (std::ostream& out, const Matrix<T>& matrix) //вывести
 {   
     for (int i = 0; i < matrix.m; ++i)
     {
@@ -71,7 +76,8 @@ std::ostream& operator<<(std::ostream& out, const Matrix& matrix) //вывест
     return out;
 }
 
-Matrix operator+(const Matrix a, const Matrix b) //сложение
+template <typename T>
+Matrix<T> operator+(const Matrix<T> a, const Matrix<T> b) //сложение
 {
     if (a.m == b.m && a.n == b.n)
     {   
@@ -85,11 +91,12 @@ Matrix operator+(const Matrix a, const Matrix b) //сложение
     else 
     {
         std::cerr << "sorry, I can't add them up" << std::endl;
-        return Matrix(0,0);
+        return Matrix(T(0),T(0));
     }
 };
 
-Matrix operator-(const Matrix a, const Matrix b) // вычитание
+template <typename T>
+Matrix<T> operator-(const Matrix<T> a, const Matrix<T> b) // вычитание
 {
     if (a.m == b.m && a.n == b.n)
     {   Matrix c(a.m, a.n);
@@ -102,11 +109,12 @@ Matrix operator-(const Matrix a, const Matrix b) // вычитание
     else 
     {   
         std::cerr << "sorry, I can't substract them" << std::endl;
-        return Matrix(0,0);
+        return Matrix(T(0),T(0));
     }
 };
 
-Matrix operator*(const Matrix a, const Matrix b) // умножение
+template <typename T>
+Matrix<T> operator*(const Matrix<T> a, const Matrix<T> b) // умножение
 {
     if (a.n == b.m)
     {    
@@ -130,7 +138,8 @@ Matrix operator*(const Matrix a, const Matrix b) // умножение
     }    
 }
 
-Matrix operator*(const Matrix a, double numb) // умножение на число
+template <typename T>
+Matrix<T> operator*(const Matrix<T> a, T numb) // умножение на число
 {
     Matrix c(a.m, a.n);         
     for (int i = 0; i < a.m; ++ i)
@@ -143,7 +152,8 @@ Matrix operator*(const Matrix a, double numb) // умножение на чис�
     return c;
 }
 
-bool operator==(const Matrix a, const Matrix b) // равенство
+template <typename T>
+bool operator==(const Matrix<T> a, const Matrix<T> b) // равенство
 {
     if (a.m == b.m && a.n == b.n)
     {    
@@ -160,7 +170,8 @@ bool operator==(const Matrix a, const Matrix b) // равенство
     else return false;
 }
 
-bool operator==(const Matrix a, int numb) // равенство со скаляром
+template <typename T>
+bool operator==(const Matrix<T> a, T numb) // равенство со скаляром
 {
     for (int i = 0; i < a.m; ++ i)
     {
@@ -181,7 +192,8 @@ bool operator==(const Matrix a, int numb) // равенство со скаля�
     return true;
 }
 
-bool operator!=(const Matrix a, const Matrix b) // неравенство
+template <typename T>
+bool operator!=(const Matrix<T> a, const Matrix<T> b) // неравенство
 {
 if (a.m == b.m && a.n == b.n)
 {    
@@ -198,14 +210,16 @@ if (a.m == b.m && a.n == b.n)
 else return true;
 }
 
-bool operator!=(const Matrix a, int numb) // неравенство со скаляром
+template <typename T>
+bool operator!=(const Matrix<T> a, T numb) // неравенство со скаляром
 {
     if (a == numb) return false;
     else return true;
 }
 
 // элементаные преобразования --------------------------------------------------
-void Matrix :: change_ft(int str_1, int str_2) // первый тип
+template <typename T>
+void Matrix<T> :: change_ft(int str_1, int str_2) // первый тип
 {   
     double  temp[n] = {0};
     for (int i = 0; i < n; ++i) temp[i] = data_arr[str_1-1][i];
@@ -214,20 +228,23 @@ void Matrix :: change_ft(int str_1, int str_2) // первый тип
     
 }
 
-void Matrix :: change_st(int str_1, double  multiplier ) // второй тип
+template <typename T>
+void Matrix<T> :: change_st(int str_1, T  multiplier ) // второй тип
 {
     for (int i = 0; i < n; ++i) data_arr[str_1-1][i] = data_arr[str_1-1][i] * multiplier ;
 }
 
-void Matrix :: change_tt(int str_1, int str_2, double  multiplier) // третий тип
+template <typename T>
+void Matrix<T> :: change_tt(int str_1, int str_2, T  multiplier) // третий тип
 {
     for (int i = 0; i < n; ++i) data_arr[str_1-1][i] = data_arr[str_1-1][i] + data_arr[str_2-1][i] * multiplier;
 }
 
 // нахождение определителя -----------------------------------------------------
-double  Matrix :: determinant()
+template <typename T>
+T  Matrix<T> :: determinant()
 {   
-    double  det = 0;
+    T  det = 0;
     if (m == n)
     {
         if (m == 1) det = data_arr[0][0];
@@ -263,7 +280,8 @@ double  Matrix :: determinant()
 }
 
 // нахождение обратной матрицы -------------------------------------------------
-Matrix Matrix :: alg_compl() // матрица алгебраических дополнений
+template <typename T>
+Matrix<T> Matrix<T> :: alg_compl() // матрица алгебраических дополнений
 {   
     Matrix ansver(m, n);
     if (m == n)
@@ -272,7 +290,7 @@ Matrix Matrix :: alg_compl() // матрица алгебраических до
         {
             for (int mat_j = 0; mat_j < n; ++mat_j)
             {   
-                double  one;
+                T  one;
                 if ((mat_i + mat_j)%2 == 0) one = 1;
                 else one = -1;
                     
@@ -299,7 +317,8 @@ Matrix Matrix :: alg_compl() // матрица алгебраических до
     return ansver;
 }   
 
-Matrix Matrix :: T() // транспонирование
+template <typename T>
+Matrix<T> Matrix<T> :: transposed() // транспонирование
 {
     Matrix x(n, m);
     for(int i = 0; i < n; ++i)
@@ -312,7 +331,8 @@ Matrix Matrix :: T() // транспонирование
     return x;
 }       
 
-Matrix Matrix::reversive()
+template <typename T>
+Matrix<T> Matrix<T>::reversed()
 {
     Matrix x(m, n);
     try
@@ -331,7 +351,8 @@ Matrix Matrix::reversive()
     return x;
 }
 
-Matrix operator!(Matrix a)
+template <typename T>
+Matrix<T> operator!(Matrix<T> a)
 {
     Matrix x(a.m, a.n);
     try
