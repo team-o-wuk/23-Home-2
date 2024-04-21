@@ -13,10 +13,8 @@ class Matrix
     T  **data_arr;
 
     public:
-        Matrix()
-            : m(0), n(0), data_arr(nullptr) //конструктор
-        {
-        }
+        Matrix()//конструктор
+            : m(0), n(0), data_arr(nullptr) {}
 
         Matrix(int lins, int tabs) //корструктор с параметрами
             :m(lins), n(tabs), data_arr(new T *[m])
@@ -35,8 +33,7 @@ class Matrix
             {
                 data_arr[i] = new T [n];
                 for (int j = 0; j < n; ++ j) data_arr[i][j] = other.data_arr[i][j];
-            }
-            
+            } 
         }
 
         ~Matrix() //деструктор
@@ -50,30 +47,30 @@ class Matrix
 
         static Matrix zero(int lins, int tabs) // стат метод для нулевой матрицы
         {
-        Matrix x(lins, tabs);
-        for (int i = 0; i < lins; ++i)
-        {
-            for (int j = 0; j < tabs; ++j)
+            Matrix x(lins, tabs);
+            for (int i = 0; i < lins; ++i)
             {
-                x.data_arr[i][j] = T(0);
+                for (int j = 0; j < tabs; ++j)
+                {
+                    x.data_arr[i][j] = T(0);
+                }
             }
-        }
-        return x;
+            return x;
         }
 
         static Matrix unit(int s) // стат метод для единичной матицы
         {
-        Matrix x(s, s);
-        for (int i = 0; i < s; ++i)
-            {
-                x.data_arr[i][i] = T(1);
-            }
-        return x;
+            Matrix x(s, s);
+            for (int i = 0; i < s; ++i)
+                {
+                    x.data_arr[i][i] = T(1);
+                }
+            return x;
         }        
 
-    void get_matrix()
+    void get_matrix() // ввод матрицы из потока
     {   
-        if (m==0 && n==0){
+        if (m==0 || n==0){
             std::cin >> m;
             std::cin >> n;
         }
@@ -86,7 +83,7 @@ class Matrix
         }
     }
 
-    void print_matrix()
+    void print_matrix() // вывод матрицы в поток
     {
         for (int i = 0; i < m; i++)
         {
@@ -96,7 +93,7 @@ class Matrix
         std::cout << std::endl;
     }
      
-    friend std::ostream& operator<< (std::ostream& out, const Matrix<T>& matrix) //вывести
+    friend std::ostream& operator<< (std::ostream& out, const Matrix<T>& matrix) // вывод (можно в файл)
         {   
             for (int i = 0; i < matrix.m; ++i)
             {
@@ -109,8 +106,12 @@ class Matrix
             return out;
         }
     
-    friend std::istream& operator>> (std::istream& in, Matrix<T>& matrix)
+    friend std::istream& operator>> (std::istream& in, Matrix<T>& matrix) // ввод матрицы (!из файла - только в матрицу с указанными параметрами)
     {   
+        if (matrix.m==0 || matrix.n==0){
+            in >> matrix.m;
+            in >> matrix.n;
+        }
         for (int i = 0; i <matrix.m; ++i)
         {
             for (int j = 0; j < matrix.n; ++j)
@@ -121,7 +122,7 @@ class Matrix
         return in;
     }
 
-    friend Matrix<T> operator+ (const Matrix<T> a, const Matrix<T> b)
+    friend Matrix<T> operator+ (const Matrix<T> a, const Matrix<T> b) // сложение
     {
         if (a.m == b.m && a.n == b.n)
         {   
@@ -139,7 +140,7 @@ class Matrix
         }
     }
 
-    friend Matrix<T> operator- (const Matrix<T> a, const Matrix<T> b)
+    friend Matrix<T> operator- (const Matrix<T> a, const Matrix<T> b) // вычитание
     {
         if (a.m == b.m && a.n == b.n)
         {   Matrix c(a.m, a.n);
@@ -156,7 +157,7 @@ class Matrix
         }
     }
 
-    friend Matrix<T> operator* (const Matrix<T> a, const Matrix<T> b)
+    friend Matrix<T> operator* (const Matrix<T> a, const Matrix<T> b) // умножение матриц
     {
         if (a.n == b.m)
         {    
@@ -180,7 +181,7 @@ class Matrix
         }    
     }
 
-    friend Matrix<T> operator* (const Matrix<T> a, T numb)
+    friend Matrix<T> operator* (const Matrix<T> a, T numb) // умножение матрицы на число
     {
         Matrix c(a.m, a.n);         
         for (int i = 0; i < a.m; ++ i)
@@ -193,7 +194,7 @@ class Matrix
         return c;
     }
     
-    friend bool operator== (const Matrix<T> a, const Matrix<T> b)
+    friend bool operator== (const Matrix<T> a, const Matrix<T> b) // равенство матриц
     {
         if (a.m == b.m && a.n == b.n)
         {    
@@ -210,7 +211,7 @@ class Matrix
         else return false;
     }
 
-    friend bool operator== (const Matrix<T> a,  T numb)
+    friend bool operator== (const Matrix<T> a,  T numb) // неравенство матрицы и скаляра
     {
         for (int i = 0; i < a.m; ++ i)
         {
@@ -273,7 +274,7 @@ class Matrix
         for (int i = 0; i < n; ++i) data_arr[str_1-1][i] = data_arr[str_1-1][i] + data_arr[str_2-1][i] * multiplier;
     }
  
-    T  determinant()
+    T  determinant() // нахождение детерминанта
     {   
         T  det = 0;
         if (m == n)
@@ -359,7 +360,7 @@ class Matrix
         return x;
     }       
 
-    Matrix<T> reversed()
+    Matrix<T> reversed() // нахождение обратной матрицы
     {
         Matrix x(m, n);
         try
@@ -378,7 +379,7 @@ class Matrix
         return x;
     }
 
-    Matrix<T> operator!()
+    Matrix<T> operator!() // тоже нахождение обратной, но с помощью оператора
     {
         Matrix x(m, n);
         try

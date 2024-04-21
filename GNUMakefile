@@ -1,8 +1,0 @@
-matrix_program: matrix.o main.o
-	g++ matrix.o main.o -o matrix_program
-
-matrix.o: matrix.cpp
-	gcc -c matrix.cpp
-
-main.o: main.cpp
-	g++ -c main.cpp
